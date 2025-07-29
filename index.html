@@ -402,28 +402,13 @@
     </style>
 </head>
 <body>
-    <!-- 背景装饰元素 -->
-    <div class="glowing-dot dot-1"></div>
-    <div class="glowing-dot dot-2"></div>
-    <i class="fas fa-gamepad game-controller controller-1"></i>
-    <i class="fas fa-headset game-controller controller-2"></i>
+    <!-- 背景元素将加载到这里 -->
+    <div id="common-background"></div>
+
+    <!-- 导航栏将加载到这里 -->
+    <div id="common-navbar"></div>
     
     <div class="wiki-container">
-        <!-- 导航栏 -->
-        <nav class="wiki-navbar">
-            <div class="wiki-logo">
-                <i class="fas fa-dungeon"></i>
-                <span class="neon-text">KJS的避难所</span>
-            </div>
-            <div class="nav-links">
-                <a href="#"><i class="fas fa-home"></i> 首页</a>
-                <a href="#"><i class="fas fa-user-astronaut"></i> 关于</a>
-                <a href="#"><i class="fa-brands fa-steam"></i> 游戏</a>
-                <a href="#"><i class="fa-brands fa-bilibili"></i> 番剧</a>
-                <a href="#"><i class="fas fa-code"></i> 项目</a>
-                <a href="#"><i class="fas fa-book"></i> 技术</a>
-            </div>
-        </nav>
         
         <!-- 主要内容区域 -->
         <main class="wiki-content">
@@ -593,5 +578,7 @@
             console.log('%c这是一个深色风格的维基式个人页面', 'font-size: 14px; color: #bb86fc;');
         });
     </script>
+        <!-- 引入组件脚本 -->
+    <script src="/js/components.js"></script>
 </body>
 </html>
