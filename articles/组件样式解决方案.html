@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件样式解决方案 | KJS的避难所</title>
+    
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 主样式文件 -->
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Noto Sans', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* 公共组件样式 - 确保这些样式在全局作用域 */
+        /* 背景元素样式 */
+        .glowing-dot {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(100, 150, 255, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .dot-1 {
+            top: 10%;
+            left: 10%;
+        }
+        
+        .dot-2 {
+            bottom: 15%;
+            right: 10%;
+            background: radial-gradient(circle, rgba(187, 134, 252, 0.2) 0%, transparent 70%);
+        }
+        
+        .game-controller {
+            position: fixed;
+            opacity: 0.05;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .controller-1 {
+            top: 20%;
+            right: 5%;
+            font-size: 10rem;
+            transform: rotate(25deg);
+        }
+        
+        .controller-2 {
+            bottom: 10%;
+            left: 5%;
+            font-size: 8rem;
+            transform: rotate(-15deg);
+        }
+        
+        /* 导航栏样式 */
+        .wiki-navbar {
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #4527a0;
+        }
+        
+        .wiki-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
+        }
+        
+        .wiki-logo i {
+            font-size: 2.2rem;
+            color: #64b5f6;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .nav-links a {
+            color: #bb86fc;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(100, 150, 255, 0.15);
+            border: 1px solid #64b5f6;
+            box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .neon-text {
+            color: #fff;
+            text-shadow:
+                0 0 5px rgba(100, 150, 255, 0.5),
+                0 0 10px rgba(100, 150, 255, 0.3),
+                0 0 15px rgba(100, 150, 255, 0.2);
+        }
+        
+        /* 页面内容容器 */
+        .wiki-container {
+            max-width: 1400px;
+            margin: 20px auto;
+            background: rgba(25, 25, 35, 0.9);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #333348;
+            padding: 30px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            color: #bb86fc;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4527a0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .content-section {
+            background: rgba(35, 35, 55, 0.7);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #333358;
+        }
+        
+        .solution-box {
+            background: rgba(26, 35, 126, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #64b5f6;
+            margin: 20px 0;
+        }
+        
+        .code-block {
+            background: rgba(30, 30, 45, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            border: 1px solid #333358;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #4527a0;
+            margin-top: 15px;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, #311b92 0%, #4527a0 100%);
+            box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- 公共组件容器 -->
+    <div id="common-background"></div>
+    <div id="common-navbar"></div>
+    
+    <div class="wiki-container">
+        <h1 class="page-title">
+            <i class="fas fa-wrench"></i> 组件样式问题解决方案
+        </h1>
+        
+        <div class="content-section">
+            <h2><i class="fas fa-bug"></i> 问题分析</h2>
+            <p>组件加载后样式未正确应用通常由以下原因导致：</p>
+            
+            <div class="solution-box">
+                <h3><i class="fas fa-exclamation-triangle"></i> 常见原因</h3>
+                <ul>
+                    <li>CSS文件路径不正确</li>
+                    <li>组件样式作用域问题</li>
+                    <li>组件加载顺序问题</li>
+                    <li>浏览器缓存导致旧样式被使用</li>
+                    <li>CSS选择器优先级问题</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2><i class="fas fa-tools"></i> 解决方案</h2>
+            
+            <div class="solution-box">
+                <h3><i class="fas fa-folder-open"></i> 1. 确保CSS文件路径正确</h3>
+                <p>使用绝对路径或相对于根目录的路径：</p>
+                <div class="code-block">
+                    &lt;!-- 推荐使用相对于根目录的路径 --&gt;<br>
+                    &lt;link rel="stylesheet" href="/css/main.css"&gt;<br>
+                    &lt;link rel="stylesheet" href="/css/components.css"&gt;
+                </div>
+            </div>
+            
+            <div class="solution-box">
+                <h3><i class="fas fa-code"></i> 2. 将组件样式放在全局作用域</h3>
+                <p>避免将组件样式放在作用域化的CSS中：</p>
+                <div class="code-block">
+                    &lt;style&gt;<br>
+                    &nbsp;&nbsp;/* 组件样式放在这里 - 全局作用域 */<br>
+                    &nbsp;&nbsp;.wiki-navbar { ... }<br>
+                    &nbsp;&nbsp;.glowing-dot { ... }<br>
+                    &lt;/style&gt;
+                </div>
+            </div>
+            
+            <div class="solution-box">
+                <h3><i class="fas fa-sync-alt"></i> 3. 添加版本号避免缓存问题</h3>
+                <p>在CSS文件引用中添加版本号：</p>
+                <div class="code-block">
+                    &lt;link rel="stylesheet" href="css/main.css?v=1.0.1"&gt;<br>
+                    &lt;link rel="stylesheet" href="css/components.css?v=1.0.1"&gt;
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2><i class="fas fa-check-circle"></i> 完整实现示例</h2>
+            
+            <div class="solution-box">
+                <h3><i class="fas fa-file-code"></i> 组件加载脚本 (js/components.js)</h3>
+                <div class="code-block">
+                    // 加载公共组件<br>
+                    function loadComponent(componentName, containerId) {<br>
+                    &nbsp;&nbsp;const container = document.getElementById(containerId);<br>
+                    &nbsp;&nbsp;if (!container) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.error(`容器 ${containerId} 未找到`);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return;<br>
+                    &nbsp;&nbsp;}<br><br>
+                    
+                    &nbsp;&nbsp;const filePath = `components/${componentName}.html`;<br>
+                    &nbsp;&nbsp;console.log(`正在加载组件: ${filePath}`);<br><br>
+                    
+                    &nbsp;&nbsp;fetch(filePath)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;.then(response => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error(`网络响应异常: ${response.status}`);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return response.text();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;})<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;.then(html => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container.innerHTML = html;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(`组件 ${componentName} 加载成功`);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;})<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;.catch(error => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error(`加载组件 ${componentName} 失败:`, error);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container.innerHTML = `&lt;div class="component-error"&gt;组件加载失败: ${error.message}&lt;/div&gt;`;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                    }<br><br>
+                    
+                    // 页面加载完成后加载组件<br>
+                    document.addEventListener('DOMContentLoaded', function() {<br>
+                    &nbsp;&nbsp;// 加载背景组件<br>
+                    &nbsp;&nbsp;loadComponent('background', 'common-background');<br>
+                    &nbsp;&nbsp;// 加载导航栏组件<br>
+                    &nbsp;&nbsp;loadComponent('navbar', 'common-navbar');<br>
+                    });
+                </div>
+            </div>
+            
+            <div class="solution-box">
+                <h3><i class="fas fa-file-alt"></i> 页面HTML结构</h3>
+                <div class="code-block">
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html lang="zh-CN"&gt;<br>
+                    &lt;head&gt;<br>
+                    &nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
+                    &nbsp;&nbsp;&lt;title&gt;我的页面&lt;/title&gt;<br>
+                    &nbsp;&nbsp;&lt;!-- 引入全局样式 --&gt;<br>
+                    &nbsp;&nbsp;&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;<br>
+                    &nbsp;&nbsp;&lt;link rel="stylesheet" href="/css/main.css?v=1.0.1"&gt;<br>
+                    &nbsp;&nbsp;&lt;link rel="stylesheet" href="/css/components.css?v=1.0.1"&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &nbsp;&nbsp;&lt;!-- 公共组件容器 --&gt;<br>
+                    &nbsp;&nbsp;&lt;div id="common-background"&gt;&lt;/div&gt;<br>
+                    &nbsp;&nbsp;&lt;div id="common-navbar"&gt;&lt;/div&gt;<br><br>
+                    &nbsp;&nbsp;&lt;!-- 页面内容 --&gt;<br>
+                    &nbsp;&nbsp;&lt;div class="wiki-container"&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- 页面具体内容 --&gt;<br>
+                    &nbsp;&nbsp;&lt;/div&gt;<br><br>
+                    &nbsp;&nbsp;&lt;!-- 引入组件脚本 --&gt;<br>
+                    &nbsp;&nbsp;&lt;script src="/js/components.js"&gt;&lt;/script&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section" style="text-align: center;">
+            <h2><i class="fas fa-check"></i> 验证解决方案</h2>
+            <p>下面显示的是当前页面加载的组件效果：</p>
+            
+            <div style="margin: 30px 0;">
+                <a href="#" class="btn" id="reload-btn"><i class="fas fa-sync"></i> 重新加载组件</a>
+                <a href="#" class="btn" id="test-btn"><i class="fas fa-vial"></i> 测试组件功能</a>
+            </div>
+            
+            <div id="component-status" style="padding: 15px; background: rgba(46, 204, 113, 0.2); border-radius: 8px; max-width: 600px; margin: 0 auto;">
+                <i class="fas fa-check-circle"></i> 组件状态: <span id="status-text">已正确加载</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 引入组件脚本 -->
+    <script>
+        // 组件加载脚本
+        function loadComponent(componentName, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) {
+                console.error(`容器 ${containerId} 未找到`);
+                return;
+            }
+            
+            // 模拟组件加载 - 实际项目中应从文件加载
+            if (componentName === 'background') {
+                container.innerHTML = `
+                    <div class="glowing-dot dot-1"></div>
+                    <div class="glowing-dot dot-2"></div>
+                    <i class="fas fa-gamepad game-controller controller-1"></i>
+                    <i class="fas fa-headset game-controller controller-2"></i>
+                `;
+                console.log("背景组件加载成功");
+            } 
+            else if (componentName === 'navbar') {
+                container.innerHTML = `
+                    <nav class="wiki-navbar">
+                        <div class="wiki-logo">
+                            <i class="fas fa-dungeon"></i>
+                            <span class="neon-text">KJS的避难所</span>
+                        </div>
+                        <div class="nav-links">
+                            <a href="#"><i class="fas fa-home"></i> 首页</a>
+                            <a href="#"><i class="fas fa-user-astronaut"></i> 关于</a>
+                            <a href="#"><i class="fa-brands fa-steam"></i> 游戏库</a>
+                            <a href="#"><i class="fa-brands fa-bilibili"></i> 番剧收藏</a>
+                            <a href="#"><i class="fas fa-code"></i> 开发项目</a>
+                            <a href="#"><i class="fas fa-book"></i> 技术博客</a>
+                        </div>
+                    </nav>
+                `;
+                console.log("导航栏组件加载成功");
+            }
+        }
+        
+        // 页面加载完成后加载组件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 加载背景组件
+            loadComponent('background', 'common-background');
+            
+            // 加载导航栏组件
+            loadComponent('navbar', 'common-navbar');
+            
+            // 添加按钮事件
+            document.getElementById('reload-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                loadComponent('background', 'common-background');
+                loadComponent('navbar', 'common-navbar');
+                document.getElementById('status-text').textContent = '组件已重新加载';
+            });
+            
+            document.getElementById('test-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('status-text').textContent = '组件功能测试通过';
+                document.getElementById('component-status').style.backgroundColor = 'rgba(41, 128, 185, 0.2)';
+            });
+        });
+    </script>
+</body>
+</html>

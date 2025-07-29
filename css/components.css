@@ -1,0 +1,114 @@
+/* 公共组件样式 */
+.glowing-dot {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(100, 150, 255, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.dot-1 {
+    top: 10%;
+    left: 10%;
+}
+
+.dot-2 {
+    bottom: 15%;
+    right: 10%;
+    background: radial-gradient(circle, rgba(187, 134, 252, 0.2) 0%, transparent 70%);
+}
+
+.game-controller {
+    position: fixed;
+    opacity: 0.05;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.controller-1 {
+    top: 20%;
+    right: 5%;
+    font-size: 10rem;
+    transform: rotate(25deg);
+}
+
+.controller-2 {
+    bottom: 10%;
+    left: 5%;
+    font-size: 8rem;
+    transform: rotate(-15deg);
+}
+
+/* 导航栏样式 */
+.wiki-navbar {
+    background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #4527a0;
+}
+
+.wiki-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
+}
+
+.wiki-logo i {
+    font-size: 2.2rem;
+    color: #64b5f6;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    font-size: 1.1rem;
+}
+
+.nav-links a {
+    color: #bb86fc;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-links a:hover {
+    background: rgba(100, 150, 255, 0.15);
+    border: 1px solid #64b5f6;
+    box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.neon-text {
+    color: #fff;
+    text-shadow:
+        0 0 5px rgba(100, 150, 255, 0.5),
+        0 0 10px rgba(100, 150, 255, 0.3),
+        0 0 15px rgba(100, 150, 255, 0.2);
+}
+
+/* 错误提示 */
+.component-error {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    padding: 10px;
+    border: 1px solid #e74c3c;
+    border-radius: 4px;
+    text-align: center;
+}

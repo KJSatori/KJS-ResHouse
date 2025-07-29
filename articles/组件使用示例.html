@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件使用示例 | KJS的避难所</title>
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入共享样式 -->
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- 引入组件特定样式 -->
+    <link rel="stylesheet" href="/css/components.css">
+    <style>
+        /* 页面特定样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Noto Sans', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .wiki-container {
+            max-width: 1400px;
+            margin: 20px auto;
+            background: rgba(25, 25, 35, 0.9);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #333348;
+            padding: 30px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            color: #bb86fc;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4527a0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .content-section {
+            background: rgba(35, 35, 55, 0.7);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #333358;
+        }
+        
+        .content-section h2 {
+            color: #64b5f6;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .content-card {
+            background: rgba(40, 40, 60, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #333358;
+            transition: all 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(100, 150, 255, 0.2);
+            border-color: #64b5f6;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333358;
+        }
+        
+        .card-header i {
+            font-size: 1.8rem;
+            color: #bb86fc;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #4527a0;
+            margin-top: 15px;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, #311b92 0%, #4527a0 100%);
+            box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 公共组件容器 -->
+    <!-- 背景元素将加载到这里 -->
+    <div id="common-background"></div>
+    
+    <!-- 导航栏将加载到这里 -->
+    <div id="common-navbar"></div>
+    
+    <div class="wiki-container">
+        <h1 class="page-title">
+            <i class="fas fa-cubes"></i> 欢迎使用公共组件系统
+        </h1>
+        
+        <div class="content-section">
+            <h2><i class="fas fa-info-circle"></i> 组件使用说明</h2>
+            <p>本页面演示了如何在您的网站中使用封装好的公共组件（导航栏和背景元素）。</p>
+            <p>您只需在HTML中添加组件容器并引入组件脚本，系统会自动加载公共组件。</p>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="card-header">
+                        <i class="fas fa-code"></i>
+                        <h3 class="card-title">HTML结构</h3>
+                    </div>
+                    <p>在&lt;body&gt;开始位置添加两个容器：</p>
+                    <ul style="padding-left: 20px; margin-top: 10px;">
+                        <li>&lt;div id="common-background"&gt;&lt;/div&gt;</li>
+                        <li>&lt;div id="common-navbar"&gt;&lt;/div&gt;</li>
+                    </ul>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-header">
+                        <i class="fas fa-file-code"></i>
+                        <h3 class="card-title">CSS样式</h3>
+                    </div>
+                    <p>在&lt;head&gt;中引入样式文件：</p>
+                    <ul style="padding-left: 20px; margin-top: 10px;">
+                        <li>main.css - 主样式</li>
+                        <li>components.css - 组件样式</li>
+                        <li>Font Awesome图标库</li>
+                    </ul>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-header">
+                        <i class="fas fa-terminal"></i>
+                        <h3 class="card-title">JavaScript脚本</h3>
+                    </div>
+                    <p>在&lt;body&gt;结束前引入组件脚本：</p>
+                    <ul style="padding-left: 20px; margin-top: 10px;">
+                        <li>&lt;script src="js/components.js"&gt;&lt;/script&gt;</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2><i class="fas fa-cogs"></i> 组件实现细节</h2>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="card-header">
+                        <i class="fas fa-sitemap"></i>
+                        <h3 class="card-title">项目结构</h3>
+                    </div>
+                    <p>推荐的项目目录结构：</p>
+                    <ul style="padding-left: 20px; margin-top: 10px;">
+                        <li>/index.html</li>
+                        <li>/css/main.css</li>
+                        <li>/css/components.css</li>
+                        <li>/js/components.js</li>
+                        <li>/components/navbar.html</li>
+                        <li>/components/background.html</li>
+                    </ul>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-header">
+                        <i class="fas fa-file-alt"></i>
+                        <h3 class="card-title">组件文件内容</h3>
+                    </div>
+                    <p>组件HTML文件只包含该组件的HTML代码：</p>
+                    <p style="margin-top: 10px;"><strong>navbar.html</strong> - 导航栏的HTML结构</p>
+                    <p><strong>background.html</strong> - 背景元素的HTML代码</p>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-header">
+                        <i class="fas fa-download"></i>
+                        <h3 class="card-title">加载过程</h3>
+                    </div>
+                    <p>当页面加载时：</p>
+                    <ol style="padding-left: 20px; margin-top: 10px;">
+                        <li>加载components.js脚本</li>
+                        <li>脚本从/components/目录获取HTML文件</li>
+                        <li>将HTML内容插入到指定容器</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section" style="text-align: center;">
+            <h2><i class="fas fa-rocket"></i> 开始使用</h2>
+            <p>按照上述步骤设置您的项目，即可在所有页面中复用公共组件</p>
+            
+            <div style="margin: 30px 0;">
+                <a href="#" class="btn"><i class="fas fa-download"></i> 下载组件文件</a>
+                <a href="#" class="btn"><i class="fas fa-code"></i> 查看完整代码</a>
+            </div>
+            
+            <div style="max-width: 800px; margin: 0 auto; background: rgba(26, 35, 126, 0.3); padding: 20px; border-radius: 8px; border-left: 4px solid #64b5f6;">
+                <p><i class="fas fa-lightbulb"></i> 提示：使用本地服务器测试组件加载功能（如Python的http.server）</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 引入组件脚本 -->
+    <script src="js/components.js"></script>
+    
+    <script>
+        // 如果components.js尚未创建，这里提供一个简单的替代方案
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查组件是否已加载
+            const backgroundLoaded = document.querySelector('.glowing-dot');
+            const navbarLoaded = document.querySelector('.wiki-navbar');
+            
+            // 如果组件未加载，则使用内联方式加载（仅用于演示）
+            if (!backgroundLoaded) {
+                const backgroundContainer = document.getElementById('common-background');
+                if (backgroundContainer) {
+                    backgroundContainer.innerHTML = `
+                        <div class="glowing-dot dot-1"></div>
+                        <div class="glowing-dot dot-2"></div>
+                        <i class="fas fa-gamepad game-controller controller-1"></i>
+                        <i class="fas fa-headset game-controller controller-2"></i>
+                    `;
+                }
+            }
+            
+            if (!navbarLoaded) {
+                const navbarContainer = document.getElementById('common-navbar');
+                if (navbarContainer) {
+                    navbarContainer.innerHTML = `
+                        <nav class="wiki-navbar">
+                            <div class="wiki-logo">
+                                <i class="fas fa-dungeon"></i>
+                                <span class="neon-text">KJS的避难所</span>
+                            </div>
+                            <div class="nav-links">
+                                <a href="#"><i class="fas fa-home"></i> 首页</a>
+                                <a href="#"><i class="fas fa-user-astronaut"></i> 关于</a>
+                                <a href="#"><i class="fa-brands fa-steam"></i> 游戏</a>
+                                <a href="#"><i class="fa-brands fa-bilibili"></i> 番剧</a>
+                                <a href="#"><i class="fas fa-code"></i> 项目</a>
+                                <a href="#"><i class="fas fa-book"></i> 技术</a>
+                            </div>
+                        </nav>
+                    `;
+                }
+            }
+            
+            // 添加简单的交互效果
+            const cards = document.querySelectorAll('.content-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-7px)';
+                    this.style.boxShadow = '0 12px 25px rgba(100, 150, 255, 0.25)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

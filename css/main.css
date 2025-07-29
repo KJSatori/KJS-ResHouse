@@ -1,0 +1,82 @@
+/* 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.img-pixel {
+    image-rendering: optimizeSpeed;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: pixelated;
+}
+
+/* 导航栏样式 */
+.wiki-navbar {
+    background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 内容区域样式 */
+.wiki-content {
+    padding: 40px;
+}
+
+.wiki-section {
+    margin-bottom: 40px;
+    background: rgba(30, 30, 45, 0.7);
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 4px solid #64b5f6;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+/* 页脚样式 */
+.wiki-footer {
+    background: rgba(20, 20, 30, 0.9);
+    padding: 30px 40px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #9e9e9e;
+    border-top: 1px solid #333348;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.wiki-link {
+    color: #64b5f6;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+/* 响应式设计 */
+@media (max-width: 900px) {
+    .wiki-navbar {
+        flex-direction: column;
+    }
+}

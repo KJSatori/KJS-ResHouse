@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>子目录路径解决方案 | KJS的避难所</title>
+    
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 使用根目录路径引入CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/components.css">
+    
+    <style>
+        /* 页面特定样式 */
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            font-family: 'Segoe UI', 'Noto Sans', system-ui, -apple-system, sans-serif;
+        }
+        
+        .solution-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: rgba(25, 25, 35, 0.9);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 1px solid #333348;
+            padding: 30px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            color: #bb86fc;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4527a0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section {
+            background: rgba(35, 35, 55, 0.7);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #333358;
+        }
+        
+        .section h2 {
+            color: #64b5f6;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .file-structure {
+            background: rgba(40, 40, 60, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #333358;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .folder {
+            margin-left: 20px;
+        }
+        
+        .folder-title {
+            font-weight: bold;
+            margin: 15px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #bb86fc;
+        }
+        
+        .file {
+            margin-left: 40px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #64b5f6;
+        }
+        
+        .code-block {
+            background: rgba(30, 30, 45, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            border: 1px solid #333358;
+        }
+        
+        .solution-box {
+            background: rgba(26, 35, 126, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #64b5f6;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #4527a0;
+            margin: 10px 5px;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, #311b92 0%, #4527a0 100%);
+            box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+        }
+        
+        .path-illustration {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(40, 40, 60, 0.6);
+            border-radius: 8px;
+        }
+        
+        .path-item {
+            margin: 0 15px;
+            text-align: center;
+        }
+        
+        .path-arrow {
+            font-size: 1.5rem;
+            color: #64b5f6;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- 公共组件容器 -->
+    <div id="common-background"></div>
+    <div id="common-navbar"></div>
+    
+    <div class="solution-container">
+        <h1 class="page-title">
+            <i class="fas fa-folder-tree"></i> 子目录路径解决方案
+        </h1>
+        
+        <div class="section">
+            <h2><i class="fas fa-sitemap"></i> 项目结构</h2>
+            <p>您的项目结构如下，页面文件存储在articles文件夹中：</p>
+            
+            <div class="file-structure">
+                <div class="folder-title"><i class="fas fa-folder"></i> my-wiki-website/</div>
+                
+                <div class="file"><i class="fas fa-file-code"></i> index.html</div>
+                
+                <div class="folder">
+                    <div class="folder-title"><i class="fas fa-folder"></i> articles/</div>
+                    <div class="file"><i class="fas fa-file-code"></i> anime.html</div>
+                    <div class="file"><i class="fas fa-file-code"></i> games.html</div>
+                    <div class="file"><i class="fas fa-file-code"></i> projects.html</div>
+                </div>
+                
+                <div class="folder">
+                    <div class="folder-title"><i class="fas fa-folder"></i> css/</div>
+                    <div class="file"><i class="fas fa-file-code"></i> main.css</div>
+                    <div class="file"><i class="fas fa-file-code"></i> components.css</div>
+                </div>
+                
+                <div class="folder">
+                    <div class="folder-title"><i class="fas fa-folder"></i> js/</div>
+                    <div class="file"><i class="fas fa-file-code"></i> components.js</div>
+                </div>
+                
+                <div class="folder">
+                    <div class="folder-title"><i class="fas fa-folder"></i> components/</div>
+                    <div class="file"><i class="fas fa-file-code"></i> navbar.html</div>
+                    <div class="file"><i class="fas fa-file-code"></i> background.html</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2><i class="fas fa-road"></i> 路径问题解决方案</h2>
+            
+            <div class="solution-box">
+                <h3><i class="fas fa-sign"></i> 1. 使用根目录路径</h3>
+                <p>在所有页面中使用根目录路径（以/开头）：</p>
+                <div class="code-block">
+                    &lt;!-- 在articles/anime.html中 --&gt;<br>
+                    &lt;link rel="stylesheet" href="/css/main.css"&gt;<br>
+                    &lt;link rel="stylesheet" href="/css/components.css"&gt;<br>
+                    &lt;script src="/js/components.js"&gt;&lt;/script&gt;
+                </div>
+                <p>根目录路径总是从网站根目录开始，不受当前页面位置影响。</p>
+            </div>
+            
+            <div class="solution-box">
+                <h3><i class="fas fa-code"></i> 2. 修改组件加载脚本</h3>
+                <p>在js/components.js中，使用根目录路径加载组件：</p>
+                <div class="code-block">
+                    // 加载公共组件<br>
+                    function loadComponent(componentName, containerId) {<br>
+                    &nbsp;&nbsp;const container = document.getElementById(containerId);<br>
+                    &nbsp;&nbsp;if (!container) return;<br><br>
+                    
+                    &nbsp;&nbsp;// 使用根目录路径<br>
+                    &nbsp;&nbsp;const filePath = <span style="color:#bb86fc;">`/components/${componentName}.html`</span>;<br><br>
+                    
+                    &nbsp;&nbsp;fetch(filePath)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;.then(response => response.text())<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;.then(html => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container.innerHTML = html;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;})<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;.catch(error => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error(`加载组件 ${componentName} 失败:`, error);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="solution-box">
+                <h3><i class="fas fa-directions"></i> 3. 路径示意图</h3>
+                <div class="path-illustration">
+                    <div class="path-item">
+                        <div>articles/games.html</div>
+                        <div style="font-size: 2rem;">→</div>
+                    </div>
+                    <div class="path-item">
+                        <div>根目录路径</div>
+                        <div style="font-size: 2rem;">↓</div>
+                    </div>
+                    <div class="path-item">
+                        <div>/components/navbar.html</div>
+                        <div style="font-size: 2rem;">←</div>
+                    </div>
+                </div>
+                <p>无论页面在哪个子目录，根目录路径始终指向正确的位置。</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2><i class="fas fa-file-alt"></i> articles/games.html 完整示例</h2>
+            <div class="code-block">
+                &lt;!DOCTYPE html&gt;<br>
+                &lt;html lang="zh-CN"&gt;<br>
+                &lt;head&gt;<br>
+                &nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
+                &nbsp;&nbsp;&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;<br>
+                &nbsp;&nbsp;&lt;title&gt;游戏收藏 | KJS的避难所&lt;/title&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;!-- 引入Font Awesome --&gt;<br>
+                &nbsp;&nbsp;&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;!-- 使用根目录路径引入CSS --&gt;<br>
+                &nbsp;&nbsp;&lt;link rel="stylesheet" href="/css/main.css"&gt;<br>
+                &nbsp;&nbsp;&lt;link rel="stylesheet" href="/css/components.css"&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;!-- 页面特定样式 --&gt;<br>
+                &nbsp;&nbsp;&lt;style&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;/* 游戏页面特定样式 */<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;.game-card {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background: rgba(35, 35, 55, 0.7);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border-radius: 8px;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;padding: 20px;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;margin-bottom: 20px;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&lt;/style&gt;<br>
+                &lt;/head&gt;<br>
+                &lt;body&gt;<br>
+                &nbsp;&nbsp;&lt;!-- 公共组件容器 --&gt;<br>
+                &nbsp;&nbsp;&lt;div id="common-background"&gt;&lt;/div&gt;<br>
+                &nbsp;&nbsp;&lt;div id="common-navbar"&gt;&lt;/div&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;div class="wiki-container"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1 class="page-title"&gt;&lt;i class="fas fa-gamepad"&gt;&lt;/i&gt; 游戏收藏&lt;/h1&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- 游戏内容 --&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="game-card"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h2&gt;赛博朋克 2077&lt;/h2&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;开放世界角色扮演游戏&lt;/p&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                &nbsp;&nbsp;&lt;/div&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;!-- 使用根目录路径引入JS --&gt;<br>
+                &nbsp;&nbsp;&lt;script src="/js/components.js"&gt;&lt;/script&gt;<br>
+                &lt;/body&gt;<br>
+                &lt;/html&gt;
+            </div>
+        </div>
+        
+        <div class="section" style="text-align: center;">
+            <h2><i class="fas fa-check-circle"></i> 解决方案总结</h2>
+            <div class="solution-box">
+                <h3><i class="fas fa-lightbulb"></i> 关键点</h3>
+                <ol style="text-align: left; max-width: 600px; margin: 0 auto;">
+                    <li>在所有HTML文件中使用<strong>根目录路径</strong>（以/开头）引用资源</li>
+                    <li>在components.js中使用<strong>/components/</strong>路径加载组件</li>
+                    <li>使用本地服务器测试（如VS Code Live Server）</li>
+                    <li>确保所有路径大小写一致</li>
+                </ol>
+            </div>
+            
+            <div style="margin: 30px 0;">
+                <a href="#" class="btn" id="test-navbar"><i class="fas fa-bars"></i> 测试导航栏</a>
+                <a href="#" class="btn" id="test-background"><i class="fas fa-dice-d20"></i> 测试背景</a>
+                <a href="#" class="btn" id="test-all"><i class="fas fa-check"></i> 测试所有组件</a>
+            </div>
+            
+            <div id="test-result" style="padding: 15px; background: rgba(46, 204, 113, 0.2); border-radius: 8px; max-width: 600px; margin: 0 auto; display: none;">
+                <i class="fas fa-check-circle"></i> <span id="result-text">测试成功！</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 组件加载脚本 - 使用根目录路径
+        function loadComponent(componentName, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            // 使用根目录路径
+            const filePath = `/components/${componentName}.html`;
+            
+            // 模拟组件加载 - 实际项目中从服务器获取
+            if (componentName === 'background') {
+                container.innerHTML = `
+                    <div class="glowing-dot dot-1"></div>
+                    <div class="glowing-dot dot-2"></div>
+                    <i class="fas fa-gamepad game-controller controller-1"></i>
+                    <i class="fas fa-headset game-controller controller-2"></i>
+                `;
+            } 
+            else if (componentName === 'navbar') {
+                container.innerHTML = `
+                    <nav class="wiki-navbar">
+                        <div class="wiki-logo">
+                            <i class="fas fa-dungeon"></i>
+                            <span class="neon-text">KJS的避难所</span>
+                        </div>
+                        <div class="nav-links">
+                            <a href="/index.html"><i class="fas fa-home"></i> 首页</a>
+                            <a href="/articles/anime.html"><i class="fa-brands fa-bilibili"></i> 番剧</a>
+                            <a href="/articles/games.html"><i class="fa-brands fa-steam"></i> 游戏</a>
+                            <a href="/articles/projects.html"><i class="fas fa-code"></i> 项目</a>
+                            <a href="#"><i class="fas fa-book"></i> 技术</a>
+                        </div>
+                    </nav>
+                `;
+            }
+        }
+        
+        // 页面加载完成后加载组件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 加载背景组件
+            loadComponent('background', 'common-background');
+            
+            // 加载导航栏组件
+            loadComponent('navbar', 'common-navbar');
+            
+            // 添加测试按钮事件
+            document.getElementById('test-navbar').addEventListener('click', function(e) {
+                e.preventDefault();
+                loadComponent('navbar', 'common-navbar');
+                showResult('导航栏组件加载成功！');
+            });
+            
+            document.getElementById('test-background').addEventListener('click', function(e) {
+                e.preventDefault();
+                loadComponent('background', 'common-background');
+                showResult('背景组件加载成功！');
+            });
+            
+            document.getElementById('test-all').addEventListener('click', function(e) {
+                e.preventDefault();
+                loadComponent('background', 'common-background');
+                loadComponent('navbar', 'common-navbar');
+                showResult('所有组件加载成功！');
+            });
+            
+            function showResult(message) {
+                const resultEl = document.getElementById('test-result');
+                const textEl = document.getElementById('result-text');
+                textEl.textContent = message;
+                resultEl.style.display = 'block';
+                
+                // 3秒后隐藏
+                setTimeout(() => {
+                    resultEl.style.display = 'none';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

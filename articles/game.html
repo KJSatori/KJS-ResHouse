@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏收藏 | KJS的避难所</title>
+    
+    <!-- 引入Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 使用根目录路径引入CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/components.css">
+    
+    <style>
+        /* 游戏页面特定样式 */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .game-card {
+            background: rgba(35, 35, 55, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #333358;
+            transition: all 0.3s ease;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: #64b5f6;
+            box-shadow: 0 5px 15px rgba(100, 150, 255, 0.2);
+        }
+        
+        .game-title {
+            font-size: 1.4rem;
+            color: #bb86fc;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 公共组件容器 -->
+    <div id="common-background"></div>
+    <div id="common-navbar"></div>
+    
+    <div class="wiki-container">
+        <h1 class="page-title">
+            <i class="fas fa-gamepad"></i> 游戏收藏
+        </h1>
+        
+        <div class="game-grid">
+            <div class="game-card">
+                <h2 class="game-title">
+                    <img src="/images/icons/被虐的诺艾尔.png"height="30px"alt="被虐的诺艾尔">
+                    <a href="/articles/被虐的诺艾尔.html" class="wiki-link">被虐的诺艾尔</a>
+                </h2>
+                <p>RPGMaker制作的RPG游戏</p>
+                <p>15岁被迫与恶魔签约的少女与恶魔和伙伴们一起复仇解开城市黑幕的故事</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 使用根目录路径引入JS -->
+    <script src="/js/components.js"></script>
+</body>
+</html>

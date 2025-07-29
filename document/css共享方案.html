@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS共享方案 | KJS的避难所</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Noto Sans', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 40px 20px;
+            background-image: radial-gradient(circle at 20% 30%, #1a1a2e 0%, #121212 70%);
+            min-height: 100vh;
+        }
+        
+        .guide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(25, 25, 35, 0.9);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #333348;
+            padding: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #4527a0;
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            color: #bb86fc;
+            text-shadow: 0 0 10px rgba(187, 134, 252, 0.3);
+            margin-bottom: 15px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #9e9e9e;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: rgba(35, 35, 55, 0.7);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #333358;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            color: #64b5f6;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333358;
+        }
+        
+        .file-structure {
+            background: rgba(40, 40, 60, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #333358;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .folder {
+            margin-left: 20px;
+        }
+        
+        .folder-title {
+            font-weight: bold;
+            margin: 15px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #bb86fc;
+        }
+        
+        .file {
+            margin-left: 40px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #64b5f6;
+        }
+        
+        .code-block {
+            background: rgba(30, 30, 45, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            border: 1px solid #333358;
+        }
+        
+        .code-comment {
+            color: #9e9e9e;
+        }
+        
+        .css-selector {
+            color: #64b5f6;
+        }
+        
+        .css-property {
+            color: #bb86fc;
+        }
+        
+        .css-value {
+            color: #f48fb1;
+        }
+        
+        .step-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .step {
+            flex: 1;
+            background: rgba(40, 40, 60, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #333358;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #64b5f6;
+            color: #121212;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .tip-box {
+            background: rgba(26, 35, 126, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #64b5f6;
+            margin: 20px 0;
+        }
+        
+        .tip-title {
+            color: #64b5f6;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #4527a0;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, #311b92 0%, #4527a0 100%);
+            box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            .step-container {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <div class="header">
+            <h1><i class="fas fa-share-alt"></i> 多页面共享CSS解决方案</h1>
+            <p>学习如何将CSS样式提取到单独文件中并在多个HTML页面中复用</p>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-folder-open"></i> 推荐项目结构</h2>
+            
+            <div class="file-structure">
+                <div class="folder-title"><i class="fas fa-folder"></i> my-wiki-website/</div>
+                
+                <div class="file"><i class="fas fa-file-code"></i> index.html</div>
+                <div class="file"><i class="fas fa-file-code"></i> games.html</div>
+                <div class="file"><i class="fas fa-file-code"></i> anime.html</div>
+                <div class="file"><i class="fas fa-file-code"></i> projects.html</div>
+                
+                <div class="folder">
+                    <div class="folder-title"><i class="fas fa-folder"></i> css/</div>
+                    <div class="file"><i class="fas fa-file-code"></i> main.css</div>
+                    <div class="file"><i class="fas fa-file-code"></i> themes.css</div>
+                    <div class="file"><i class="fas fa-file-code"></i> responsive.css</div>
+                </div>
+                
+                <div class="folder">
+                    <div class="folder-title"><i class="fas fa-folder"></i> js/</div>
+                    <div class="file"><i class="fas fa-file-code"></i> main.js</div>
+                </div>
+                
+                <div class="folder">
+                    <div class="folder-title"><i class="fas fa-folder"></i> images/</div>
+                    <div class="file"><i class="fas fa-file-image"></i> profile.jpg</div>
+                    <div class="file"><i class="fas fa-file-image"></i> banner.png</div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h3 class="tip-title"><i class="fas fa-lightbulb"></i> 结构说明</h3>
+                <p>这种结构将所有CSS文件集中放在css目录中，HTML页面放在根目录。每个HTML页面通过相对路径引用CSS文件。</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-file-code"></i> 创建CSS文件</h2>
+            
+            <p>在css目录中创建main.css文件，包含所有通用样式：</p>
+            
+            <div class="code-block">
+                <span class="code-comment">/* css/main.css */</span><br><br>
+                
+                <span class="code-comment">/* 基础样式 */</span><br>
+                <span class="css-selector">*</span> {<br>
+                &nbsp;&nbsp;<span class="css-property">margin</span>: <span class="css-value">0</span>;<br>
+                &nbsp;&nbsp;<span class="css-property">padding</span>: <span class="css-value">0</span>;<br>
+                &nbsp;&nbsp;<span class="css-property">box-sizing</span>: <span class="css-value">border-box</span>;<br>
+                }<br><br>
+                
+                <span class="css-selector">body</span> {<br>
+                &nbsp;&nbsp;<span class="css-property">background-color</span>: <span class="css-value">#121212</span>;<br>
+                &nbsp;&nbsp;<span class="css-property">color</span>: <span class="css-value">#e0e0e0</span>;<br>
+                &nbsp;&nbsp;<span class="css-property">line-height</span>: <span class="css-value">1.6</span>;<br>
+                }<br><br>
+                
+                <span class="code-comment">/* 导航栏样式 */</span><br>
+                <span class="css-selector">.wiki-navbar</span> {<br>
+                &nbsp;&nbsp;<span class="css-property">background</span>: <span class="css-value">linear-gradient(135deg, #1a237e 0%, #311b92 100%)</span>;<br>
+                &nbsp;&nbsp;<span class="css-property">padding</span>: <span class="css-value">15px 30px</span>;<br>
+                &nbsp;&nbsp;<span class="css-property">display</span>: <span class="css-value">flex</span>;<br>
+                }<br><br>
+                
+                <span class="code-comment">/* 内容区域样式 */</span><br>
+                <span class="css-selector">.wiki-content</span> {<br>
+                &nbsp;&nbsp;<span class="css-property">padding</span>: <span class="css-value">40px</span>;<br>
+                }<br><br>
+                
+                <span class="code-comment">/* 页脚样式 */</span><br>
+                <span class="css-selector">.wiki-footer</span> {<br>
+                &nbsp;&nbsp;<span class="css-property">background</span>: <span class="css-value">rgba(20, 20, 30, 0.9)</span>;<br>
+                &nbsp;&nbsp;<span class="css-property">padding</span>: <span class="css-value">30px 40px</span>;<br>
+                &nbsp;&nbsp;<span class="css-property">text-align</span>: <span class="css-value">center</span>;<br>
+                }<br><br>
+                
+                <span class="code-comment">/* 响应式设计 */</span><br>
+                <span class="css-selector">@media (max-width: 900px)</span> {<br>
+                &nbsp;&nbsp;<span class="css-selector">.wiki-navbar</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="css-property">flex-direction</span>: <span class="css-value">column</span>;<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-link"></i> 在HTML中引用CSS文件</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3><span class="step-number">1</span> 在HTML头部添加链接</h3>
+                    <p>在每个HTML文件的&lt;head&gt;部分添加：</p>
+                    <div class="code-block">
+                        <span class="code-comment">&lt;!-- 引入主样式文件 --&gt;</span><br>
+                        &lt;<span class="css-property">link</span> <span class="css-selector">rel</span>=<span class="css-value">"stylesheet"</span> <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="css-selector">href</span>=<span class="css-value">"css/main.css"</span>&gt;
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <h3><span class="step-number">2</span> 添加特定页面样式</h3>
+                    <p>如需页面特定样式，可以：</p>
+                    <div class="code-block">
+                        <span class="code-comment">&lt;!-- 页面特定样式 --&gt;</span><br>
+                        &lt;<span class="css-property">style</span>&gt;<br>
+                        &nbsp;&nbsp;<span class="css-selector">.page-specific</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="css-property">color</span>: <span class="css-value">#bb86fc</span>;<br>
+                        &nbsp;&nbsp;}<br>
+                        &lt;/<span class="css-property">style</span>&gt;
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <h3><span class="step-number">3</span> 添加额外CSS文件</h3>
+                    <p>如有需要可以添加更多CSS文件：</p>
+                    <div class="code-block">
+                        <span class="code-comment">&lt;!-- 引入响应式样式 --&gt;</span><br>
+                        &lt;<span class="css-property">link</span> <span class="css-selector">rel</span>=<span class="css-value">"stylesheet"</span> <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="css-selector">href</span>=<span class="css-value">"css/responsive.css"</span>&gt;
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h3 class="tip-title"><i class="fas fa-exclamation-triangle"></i> 重要提示</h3>
+                <p>确保CSS文件的路径正确。如果HTML文件在子目录中，可能需要调整路径：</p>
+                <ul style="padding-left: 30px; margin-top: 10px;">
+                    <li>同级目录：<code>"css/main.css"</code></li>
+                    <li>上级目录：<code>"../css/main.css"</code></li>
+                    <li>根目录：<code>"/css/main.css"</code></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-cogs"></i> 高级技巧</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3><i class="fas fa-layer-group"></i> 模块化CSS</h3>
+                    <p>将CSS拆分为多个文件：</p>
+                    <ul style="padding-left: 30px; margin-top: 10px;">
+                        <li><code>base.css</code> - 基础样式</li>
+                        <li><code>layout.css</code> - 布局样式</li>
+                        <li><code>components.css</code> - 组件样式</li>
+                        <li><code>themes.css</code> - 主题样式</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <h3><i class="fas fa-tachometer-alt"></i> 性能优化</h3>
+                    <p>提高CSS加载效率：</p>
+                    <ul style="padding-left: 30px; margin-top: 10px;">
+                        <li>合并多个CSS文件</li>
+                        <li>使用CSS minifier压缩</li>
+                        <li>添加缓存控制头</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <h3><i class="fas fa-code-branch"></i> 版本控制</h3>
+                    <p>管理CSS更新：</p>
+                    <div class="code-block">
+                        <span class="code-comment">&lt;!-- 添加版本号防止缓存 --&gt;</span><br>
+                        &lt;<span class="css-property">link</span> <span class="css-selector">rel</span>=<span class="css-value">"stylesheet"</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="css-selector">href</span>=<span class="css-value">"css/main.css?v=1.2.0"</span>&gt;
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="text-align: center;">
+            <h2 class="card-title"><i class="fas fa-rocket"></i> 开始使用</h2>
+            <p>按照上述步骤组织您的项目，即可在多页面中共享CSS样式</p>
+            
+            <div style="margin: 30px 0;">
+                <a href="#" class="btn"><i class="fas fa-download"></i> 下载示例项目</a>
+                <a href="#" class="btn"><i class="fas fa-code"></i> 查看完整CSS</a>
+            </div>
+            
+            <div class="tip-box" style="max-width: 800px; margin: 0 auto;">
+                <h3 class="tip-title"><i class="fas fa-question-circle"></i> 需要帮助？</h3>
+                <p>如果您在实施过程中遇到任何问题，可以参考我们的文档或联系支持团队</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 添加简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加卡片悬停效果
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 10px 25px rgba(100, 150, 255, 0.2)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.25)';
+                });
+            });
+            
+            // 添加文件结构交互
+            const fileItems = document.querySelectorAll('.file, .folder-title');
+            fileItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.color = '#f48fb1';
+                    setTimeout(() => {
+                        this.style.color = '';
+                    }, 500);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

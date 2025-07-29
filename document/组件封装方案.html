@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件封装方案 | KJS的避难所</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Noto Sans', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 20px;
+            background-image: radial-gradient(circle at 20% 30%, #1a1a2e 0%, #121212 70%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .guide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(25, 25, 35, 0.9);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #333348;
+            padding: 30px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #4527a0;
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            color: #bb86fc;
+            text-shadow: 0 0 10px rgba(187, 134, 252, 0.3);
+            margin-bottom: 15px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #9e9e9e;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: rgba(35, 35, 55, 0.7);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #333358;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            color: #64b5f6;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333358;
+        }
+        
+        .file-structure {
+            background: rgba(40, 40, 60, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #333358;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .folder {
+            margin-left: 20px;
+        }
+        
+        .folder-title {
+            font-weight: bold;
+            margin: 15px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #bb86fc;
+        }
+        
+        .file {
+            margin-left: 40px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #64b5f6;
+        }
+        
+        .code-block {
+            background: rgba(30, 30, 45, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            border: 1px solid #333358;
+        }
+        
+        .code-comment {
+            color: #9e9e9e;
+        }
+        
+        .css-selector {
+            color: #64b5f6;
+        }
+        
+        .css-property {
+            color: #bb86fc;
+        }
+        
+        .css-value {
+            color: #f48fb1;
+        }
+        
+        .step-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .step {
+            flex: 1;
+            background: rgba(40, 40, 60, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #333358;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #64b5f6;
+            color: #121212;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .tip-box {
+            background: rgba(26, 35, 126, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #64b5f6;
+            margin: 20px 0;
+        }
+        
+        .tip-title {
+            color: #64b5f6;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #4527a0;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, #311b92 0%, #4527a0 100%);
+            box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            .step-container {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        /* 公共组件样式 */
+        .glowing-dot {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(100, 150, 255, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .dot-1 {
+            top: 10%;
+            left: 10%;
+        }
+        
+        .dot-2 {
+            bottom: 15%;
+            right: 10%;
+            background: radial-gradient(circle, rgba(187, 134, 252, 0.2) 0%, transparent 70%);
+        }
+        
+        .game-controller {
+            position: absolute;
+            opacity: 0.05;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .controller-1 {
+            top: 20%;
+            right: 5%;
+            font-size: 10rem;
+            transform: rotate(25deg);
+        }
+        
+        .controller-2 {
+            bottom: 10%;
+            left: 5%;
+            font-size: 8rem;
+            transform: rotate(-15deg);
+        }
+        
+        /* 导航栏样式 */
+        .wiki-navbar {
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #4527a0;
+        }
+        
+        .wiki-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
+        }
+        
+        .wiki-logo i {
+            font-size: 2.2rem;
+            color: #64b5f6;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .nav-links a {
+            color: #bb86fc;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(100, 150, 255, 0.15);
+            border: 1px solid #64b5f6;
+            box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .neon-text {
+            color: #fff;
+            text-shadow:
+                0 0 5px rgba(100, 150, 255, 0.5),
+                0 0 10px rgba(100, 150, 255, 0.3),
+                0 0 15px rgba(100, 150, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- 公共组件将由JavaScript动态插入到这里 -->
+    <div id="common-background"></div>
+    <div id="common-navbar"></div>
+    
+    <div class="guide-container">
+        <div class="header">
+            <h1><i class="fas fa-cube"></i> 公共组件封装方案</h1>
+            <p>实现导航栏和背景元素在多个页面中的复用</p>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-project-diagram"></i> 项目结构设计</h2>
+            
+            <div class="file-structure">
+                <div class="folder-title"><i class="fas fa-folder"></i> my-wiki-website/</div>
+                
+                <div class="file"><i class="fas fa-file-code"></i> index.html</div>
+                <div class="file"><i class="fas fa-file-code"></i> games.html</div>
+                <div class="file"><i class="fas fa-file-code"></i> anime.html</div>
+                
+                <div class="folder">
+                    <div class="folder-title"><i class="fas fa-folder"></i> css/</div>
+                    <div class="file"><i class="fas fa-file-code"></i> main.css</div>
+                    <div class="file"><i class="fas fa-file-code"></i> components.css</div>
+                </div>
+                
+                <div class="folder">
+                    <div class="folder-title"><i class="fas fa-folder"></i> js/</div>
+                    <div class="file"><i class="fas fa-file-code"></i> common.js</div>
+                    <div class="file"><i class="fas fa-file-code"></i> components.js</div>
+                </div>
+                
+                <div class="folder">
+                    <div class="folder-title"><i class="fas fa-folder"></i> components/</div>
+                    <div class="file"><i class="fas fa-file-code"></i> navbar.html</div>
+                    <div class="file"><i class="fas fa-file-code"></i> background.html</div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h3 class="tip-title"><i class="fas fa-lightbulb"></i> 设计说明</h3>
+                <p>这种结构将公共组件分离到单独的文件中，通过JavaScript动态加载到每个页面，实现代码复用。</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-file-code"></i> 创建公共组件文件</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3><span class="step-number">1</span> 导航栏组件 (components/navbar.html)</h3>
+                    <div class="code-block">
+                        <span class="code-comment">&lt;!-- 导航栏组件 --&gt;</span><br>
+                        &lt;<span class="css-property">nav</span> <span class="css-selector">class</span>=<span class="css-value">"wiki-navbar"</span>&gt;<br>
+                        &nbsp;&nbsp;&lt;<span class="css-property">div</span> <span class="css-selector">class</span>=<span class="css-value">"wiki-logo"</span>&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="css-property">i</span> <span class="css-selector">class</span>=<span class="css-value">"fas fa-dungeon"</span>&gt;&lt;/<span class="css-property">i</span>&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="css-property">span</span> <span class="css-selector">class</span>=<span class="css-value">"neon-text"</span>&gt;KJS的避难所&lt;/<span class="css-property">span</span>&gt;<br>
+                        &nbsp;&nbsp;&lt;/<span class="css-property">div</span>&gt;<br>
+                        &nbsp;&nbsp;&lt;<span class="css-property">div</span> <span class="css-selector">class</span>=<span class="css-value">"nav-links"</span>&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="css-property">a</span> <span class="css-selector">href</span>=<span class="css-value">"index.html"</span>&gt;&lt;<span class="css-property">i</span> <span class="css-selector">class</span>=<span class="css-value">"fas fa-home"</span>&gt;&lt;/<span class="css-property">i</span>&gt; 首页&lt;/<span class="css-property">a</span>&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">&lt;!-- 其他导航链接 --&gt;</span><br>
+                        &nbsp;&nbsp;&lt;/<span class="css-property">div</span>&gt;<br>
+                        &lt;/<span class="css-property">nav</span>&gt;
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <h3><span class="step-number">2</span> 背景组件 (components/background.html)</h3>
+                    <div class="code-block">
+                        <span class="code-comment">&lt;!-- 背景装饰元素 --&gt;</span><br>
+                        &lt;<span class="css-property">div</span> <span class="css-selector">class</span>=<span class="css-value">"glowing-dot dot-1"</span>&gt;&lt;/<span class="css-property">div</span>&gt;<br>
+                        &lt;<span class="css-property">div</span> <span class="css-selector">class</span>=<span class="css-value">"glowing-dot dot-2"</span>&gt;&lt;/<span class="css-property">div</span>&gt;<br>
+                        &lt;<span class="css-property">i</span> <span class="css-selector">class</span>=<span class="css-value">"fas fa-gamepad game-controller controller-1"</span>&gt;&lt;/<span class="css-property">i</span>&gt;<br>
+                        &lt;<span class="css-property">i</span> <span class="css-selector">class</span>=<span class="css-value">"fas fa-headset game-controller controller-2"</span>&gt;&lt;/<span class="css-property">i</span>&gt;
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-code"></i> 创建加载脚本 (js/components.js)</h2>
+            
+            <div class="code-block">
+                <span class="code-comment">// 加载公共组件</span><br>
+                <span class="css-property">function</span> <span class="css-selector">loadComponent</span>(<span class="css-value">componentName</span>, <span class="css-value">containerId</span>) {<br>
+                &nbsp;&nbsp;<span class="css-property">const</span> <span class="css-value">container</span> = <span class="css-selector">document</span>.<span class="css-property">getElementById</span>(<span class="css-value">containerId</span>);<br>
+                &nbsp;&nbsp;<span class="css-property">if</span> (!<span class="css-value">container</span>) <span class="css-property">return</span>;<br><br>
+                &nbsp;&nbsp;<span class="css-property">fetch</span>(<span class="css-value">`components/${componentName}.html`</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;.<span class="css-property">then</span>(<span class="css-value">response</span> => <span class="css-value">response</span>.<span class="css-property">text</span>())<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;.<span class="css-property">then</span>(<span class="css-value">html</span> => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="css-value">container</span>.<span class="css-property">innerHTML</span> = <span class="css-value">html</span>;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;})<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;.<span class="css-property">catch</span>(<span class="css-value">error</span> => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="css-selector">console</span>.<span class="css-property">error</span>(<span class="css-value">`加载组件 ${componentName} 失败:`</span>, <span class="css-value">error</span>);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                }<br><br>
+                
+                <span class="code-comment">// 页面加载完成后执行</span><br>
+                <span class="css-selector">document</span>.<span class="css-property">addEventListener</span>(<span class="css-value">'DOMContentLoaded'</span>, <span class="css-property">function</span>() {<br>
+                &nbsp;&nbsp;<span class="css-property">loadComponent</span>(<span class="css-value">'background'</span>, <span class="css-value">'common-background'</span>);<br>
+                &nbsp;&nbsp;<span class="css-property">loadComponent</span>(<span class="css-value">'navbar'</span>, <span class="css-value">'common-navbar'</span>);<br>
+                });
+            </div>
+            
+            <div class="tip-box">
+                <h3 class="tip-title"><i class="fas fa-exclamation-triangle"></i> 注意事项</h3>
+                <p>1. 确保组件文件路径正确</p>
+                <p>2. 如果使用本地文件系统(file://协议)，某些浏览器可能限制fetch功能</p>
+                <p>3. 建议使用本地服务器(如Python http.server)进行测试</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-file-alt"></i> 在页面中使用公共组件</h2>
+            
+            <div class="code-block">
+                <span class="code-comment">&lt;!DOCTYPE html&gt;</span><br>
+                &lt;<span class="css-property">html</span> <span class="css-selector">lang</span>=<span class="css-value">"zh-CN"</span>&gt;<br>
+                &lt;<span class="css-property">head</span>&gt;<br>
+                &nbsp;&nbsp;&lt;<span class="css-property">meta</span> <span class="css-selector">charset</span>=<span class="css-value">"UTF-8"</span>&gt;<br>
+                &nbsp;&nbsp;&lt;<span class="css-property">title</span>&gt;我的页面&lt;/<span class="css-property">title</span>&gt;<br>
+                &nbsp;&nbsp;<span class="code-comment">&lt;!-- 引入样式和公共组件脚本 --&gt;</span><br>
+                &nbsp;&nbsp;&lt;<span class="css-property">link</span> <span class="css-selector">rel</span>=<span class="css-value">"stylesheet"</span> <span class="css-selector">href</span>=<span class="css-value">"css/main.css"</span>&gt;<br>
+                &nbsp;&nbsp;&lt;<span class="css-property">link</span> <span class="css-selector">rel</span>=<span class="css-value">"stylesheet"</span> <span class="css-selector">href</span>=<span class="css-value">"css/components.css"</span>&gt;<br>
+                &nbsp;&nbsp;&lt;<span class="css-property">link</span> <span class="css-selector">rel</span>=<span class="css-value">"stylesheet"</span> <span class="css-selector">href</span>=<span class="css-value">"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"</span>&gt;<br>
+                &lt;/<span class="css-property">head</span>&gt;<br>
+                &lt;<span class="css-property">body</span>&gt;<br>
+                &nbsp;&nbsp;<span class="code-comment">&lt;!-- 公共组件容器 --&gt;</span><br>
+                &nbsp;&nbsp;&lt;<span class="css-property">div</span> <span class="css-selector">id</span>=<span class="css-value">"common-background"</span>&gt;&lt;/<span class="css-property">div</span>&gt;<br>
+                &nbsp;&nbsp;&lt;<span class="css-property">div</span> <span class="css-selector">id</span>=<span class="css-value">"common-navbar"</span>&gt;&lt;/<span class="css-property">div</span>&gt;<br><br>
+                &nbsp;&nbsp;<span class="code-comment">&lt;!-- 页面内容 --&gt;</span><br>
+                &nbsp;&nbsp;&lt;<span class="css-property">div</span> <span class="css-selector">class</span>=<span class="css-value">"wiki-container"</span>&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">&lt;!-- 页面具体内容 --&gt;</span><br>
+                &nbsp;&nbsp;&lt;/<span class="css-property">div</span>&gt;<br><br>
+                &nbsp;&nbsp;<span class="code-comment">&lt;!-- 引入组件脚本 --&gt;</span><br>
+                &nbsp;&nbsp;&lt;<span class="css-property">script</span> <span class="css-selector">src</span>=<span class="css-value">"js/components.js"</span>&gt;&lt;/<span class="css-property">script</span>&gt;<br>
+                &lt;/<span class="css-property">body</span>&gt;<br>
+                &lt;/<span class="css-property">html</span>&gt;
+            </div>
+        </div>
+        
+        <div class="card" style="text-align: center;">
+            <h2 class="card-title"><i class="fas fa-rocket"></i> 实现效果</h2>
+            <p>下面是使用组件封装后的导航栏和背景效果</p>
+            
+            <!-- 实际效果展示区域 -->
+            <div style="margin: 30px auto; max-width: 800px; border: 1px solid #333358; border-radius: 8px; overflow: hidden;">
+                <!-- 背景元素 -->
+                <div style="position: relative; height: 200px; background: #1a1a2e; overflow: hidden;">
+                    <div class="glowing-dot dot-1"></div>
+                    <div class="glowing-dot dot-2"></div>
+                    <i class="fas fa-gamepad game-controller controller-1"></i>
+                    <i class="fas fa-headset game-controller controller-2"></i>
+                </div>
+                
+                <!-- 导航栏 -->
+                <nav class="wiki-navbar" style="position: static;">
+                    <div class="wiki-logo">
+                        <i class="fas fa-dungeon"></i>
+                        <span class="neon-text">KJS的避难所</span>
+                    </div>
+                    <div class="nav-links">
+                        <a href="#"><i class="fas fa-home"></i> 首页</a>
+                        <a href="#"><i class="fas fa-user-astronaut"></i> 关于</a>
+                        <a href="#"><i class="fa-brands fa-steam"></i> 游戏</a>
+                        <a href="#"><i class="fa-brands fa-bilibili"></i> 番剧</a>
+                        <a href="#"><i class="fas fa-code"></i> 项目</a>
+                        <a href="#"><i class="fas fa-book"></i> 技术</a>
+                    </div>
+                </nav>
+                
+                <!-- 内容示例 -->
+                <div style="padding: 20px; background: rgba(35, 35, 55, 0.7);">
+                    <p>这里是页面内容区域</p>
+                </div>
+            </div>
+            
+            <div style="margin: 30px 0;">
+                <a href="#" class="btn"><i class="fas fa-download"></i> 下载组件代码</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 模拟组件加载（实际项目中应使用components.js）
+        document.addEventListener('DOMContentLoaded', function() {
+            // 模拟加载背景组件
+            const backgroundContainer = document.getElementById('common-background');
+            if (backgroundContainer) {
+                backgroundContainer.innerHTML = `
+                    <div class="glowing-dot dot-1"></div>
+                    <div class="glowing-dot dot-2"></div>
+                    <i class="fas fa-gamepad game-controller controller-1"></i>
+                    <i class="fas fa-headset game-controller controller-2"></i>
+                `;
+            }
+            
+            // 模拟加载导航栏组件
+            const navbarContainer = document.getElementById('common-navbar');
+            if (navbarContainer) {
+                navbarContainer.innerHTML = `
+                    <nav class="wiki-navbar">
+                        <div class="wiki-logo">
+                            <i class="fas fa-dungeon"></i>
+                            <span class="neon-text">KJS的避难所</span>
+                        </div>
+                        <div class="nav-links">
+                            <a href="#"><i class="fas fa-home"></i> 首页</a>
+                            <a href="#"><i class="fas fa-user-astronaut"></i> 关于</a>
+                            <a href="#"><i class="fa-brands fa-steam"></i> 游戏</a>
+                            <a href="#"><i class="fa-brands fa-bilibili"></i> 番剧</a>
+                            <a href="#"><i class="fas fa-code"></i> 项目</a>
+                            <a href="#"><i class="fas fa-book"></i> 技术</a>
+                        </div>
+                    </nav>
+                `;
+            }
+            
+            // 添加卡片悬停效果
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 10px 25px rgba(100, 150, 255, 0.2)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.25)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
