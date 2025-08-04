@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>游戏收藏 | KJS的避难所</title>
-    
+
     <!-- 引入Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- 使用根目录路径引入CSS -->
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/components.css">
-    
+
     <style>
         /* 游戏页面特定样式 */
         .game-grid {
@@ -20,7 +21,7 @@
             gap: 20px;
             margin-top: 30px;
         }
-        
+
         .game-card {
             background: rgba(35, 35, 55, 0.7);
             border-radius: 8px;
@@ -28,13 +29,13 @@
             border: 1px solid #333358;
             transition: all 0.3s ease;
         }
-        
+
         .game-card:hover {
             transform: translateY(-5px);
             border-color: #64b5f6;
             box-shadow: 0 5px 15px rgba(100, 150, 255, 0.2);
         }
-        
+
         .game-title {
             font-size: 1.4rem;
             color: #bb86fc;
@@ -45,29 +46,331 @@
         }
     </style>
 </head>
+
 <body>
-    <!-- 公共组件容器 -->
+
     <div id="common-background"></div>
-    <div id="common-navbar"></div>
-    
     <div class="wiki-container">
-        <h1 class="page-title">
-            <i class="fas fa-gamepad"></i> 游戏收藏
-        </h1>
-        
-        <div class="game-grid">
-            <div class="game-card">
-                <h2 class="game-title">
-                    <img src="/images/icons/被虐的诺艾尔.png"height="30px"alt="被虐的诺艾尔">
-                    <a href="/articles/被虐的诺艾尔.html" class="wiki-link">被虐的诺艾尔</a>
-                </h2>
-                <p>RPGMaker制作的RPG游戏</p>
-                <p>15岁被迫与恶魔签约的少女与恶魔和伙伴们一起复仇解开城市黑幕的故事</p>
+        <main class="wiki-content">
+
+            <div id="common-navbar"></div>
+            <h1 class="page-title">
+                <i class="fas fa-gamepad"></i> 游戏收藏
+            </h1>
+            <hr style="margin-top: 4px; margin-bottom: 8px;">
+            <div class="game-grid">
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/被虐的诺艾尔.png" height="30px" alt="被虐的诺艾尔">
+                        <a href="/articles/被虐的诺艾尔.html" class="wiki-link">被虐的诺艾尔</a>
+                    </h2>
+                    <p>类型：RPG游戏 · RPGMaker</p>
+                    <p>开发者：KANAWO</p>
+                    <p>发行日期：2016 年 4 月 14 日</p>
+                    <p>评级：
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <span style="color: violet;">佳作！</span>
+                    </p>
+                    <p>15岁被迫与恶魔签约的少女与恶魔和伙伴们一起复仇解开城市黑幕的故事</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/饥荒联机版.ico" height="30px" alt="饥荒联机版">
+                        <a href="#" class="wiki-link">饥荒联机版</a>
+                    </h2>
+                    <p>类型：沙盒 · 生存</p>
+                    <p>开发者：Klei Entertainment</p>
+                    <p>发行日期：2015 年 6 月 3 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/饥荒.ico" height="30px" alt="饥荒">
+                        <a href="#" class="wiki-link">饥荒</a>
+                    </h2>
+                    <p>类型：沙盒 · 生存</p>
+                    <p>开发者：Klei Entertainment</p>
+                    <p>发行日期：2013 年 4 月 23 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/泰拉瑞亚.ico" height="30px" alt="泰拉瑞亚">
+                        <a href="#" class="wiki-link">泰拉瑞亚</a>
+                    </h2>
+                    <p>类型：沙盒 · 冒险</p>
+                    <p>开发者：Re-Logic</p>
+                    <p>发行日期：2011 年 5 月 16 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/TModLoader.ico" height="30px" alt="TModLoader">
+                        <a href="#" class="wiki-link">TModLoader</a>
+                    </h2>
+                    <p>类型：沙盒 · 冒险</p>
+                    <p>开发者：TML Team</p>
+                    <p>发行日期：2017 年 4 月 25 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/多洛可小镇.ico" height="30px" alt="多洛可小镇">
+                        <a href="#" class="wiki-link">多洛可小镇</a>
+                    </h2>
+                    <p>类型：农场 · 冒险 · 末日</p>
+                    <p>开发者：RedSaw Games Studio</p>
+                    <p>发行日期：2025 年 5 月 8 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/崩溃大陆.ico" height="30px" alt="崩溃大陆">
+                        <a href="#" class="wiki-link">崩溃大陆</a>
+                    </h2>
+                    <p>类型：冒险 · 刷 · 外太空</p>
+                    <p>开发者：Butterscotch Shenanigans</p>
+                    <p>发行日期：2016 年 1 月 21 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/守墓人.ico" height="30px" alt="守墓人">
+                        <a href="#" class="wiki-link">守墓人</a>
+                    </h2>
+                    <p>类型：宗教 · 模拟经营 · 穿越</p>
+                    <p>开发者：Lazy Bear Games</p>
+                    <p>发行日期：2018 年 8 月 15 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/育蛙模拟器.ico" height="30px" alt="育蛙模拟器">
+                        <a href="#" class="wiki-link">育蛙模拟器</a>
+                    </h2>
+                    <p>类型：模拟 · 生物收集 · 动物</p>
+                    <p>开发者：ellraiser</p>
+                    <p>发行日期：2025 年 3 月 21 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/星界边境.ico" height="30px" alt="星界边境">
+                        <a href="#" class="wiki-link">星界边境</a>
+                    </h2>
+                    <p>类型：沙盒 · 冒险 · 太空</p>
+                    <p>开发者：Chucklefish</p>
+                    <p>发行日期：2016 年 7 月 23 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/东方夜雀食堂.ico" height="30px" alt="东方夜雀食堂">
+                        <a href="#" class="wiki-link">东方夜雀食堂</a>
+                    </h2>
+                    <p>类型：休闲 · 经营 · 东方</p>
+                    <p>开发者：二色幽紫蝶</p>
+                    <p>发行日期：2021 年 10 月 1 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/缺氧.ico" height="30px" alt="缺氧">
+                        <a href="#" class="wiki-link">缺氧</a>
+                    </h2>
+                    <p>类型：模拟 · 建设 · 管理</p>
+                    <p>开发者：Klei Entertainment</p>
+                    <p>发行日期：2019 年 7 月 31 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/王国：两位君主.ico" height="30px" alt="王国：两位君主">
+                        <a href="#" class="wiki-link">王国：两位君主</a>
+                    </h2>
+                    <p>类型：塔防 · 管理 · 建造</p>
+                    <p>开发者：Raw Fury Games</p>
+                    <p>发行日期：2018 年 12 月 11 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/异形工厂.ico" height="30px" alt="异形工厂">
+                        <a href="#" class="wiki-link">异形工厂</a>
+                    </h2>
+                    <p>类型：极简 · 沙盒 · 建设</p>
+                    <p>开发者：Tobias Springer</p>
+                    <p>发行日期：2020 年 6 月 7 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/犹格索托斯的庭院.ico" height="30px" alt="犹格索托斯的庭院">
+                        <a href="#" class="wiki-link">犹格索托斯的庭院</a>
+                    </h2>
+                    <p>类型：视觉小说 · 克苏鲁 · 经营</p>
+                    <p>开发者：Bone Nail</p>
+                    <p>发行日期：2023 年 10 月 20 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/主播女孩重度依赖.ico" height="30px" alt="主播女孩重度依赖">
+                        <a href="#" class="wiki-link">主播女孩重度依赖</a>
+                    </h2>
+                    <p>类型：动漫 · 视觉小说 · 心理恐怖</p>
+                    <p>开发者：WSS playground</p>
+                    <p>发行日期：2022 年 1 月 21 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/星露谷物语.ico" height="30px" alt="星露谷物语">
+                        <a href="#" class="wiki-link">星露谷物语</a>
+                    </h2>
+                    <p>类型：农场 · 经营 · 肝</p>
+                    <p>开发者：ConcernedApe</p>
+                    <p>发行日期：2016 年 2 月 27 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
+                <div class="game-card">
+                    <h2 class="game-title">
+                        <img src="/images/icons/Alice In Cradle.png" height="30px" alt="Alice In Cradle">
+                        <a href="#" class="wiki-link">Alice In Cradle</a>
+                    </h2>
+                    <p>类型：类银 · NSFW · 可爱</p>
+                    <p>开发者：ConcernedApe</p>
+                    <p>发行日期：20?? 年 ? 月 ? 日</p>
+                    <p>评级：
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </p>
+                    <p>工作中</p>
+                </div>
             </div>
-        </div>
     </div>
-    
+    </main>
     <!-- 使用根目录路径引入JS -->
     <script src="/js/components.js"></script>
 </body>
+
 </html>
